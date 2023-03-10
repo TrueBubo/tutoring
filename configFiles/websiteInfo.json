@@ -1,0 +1,8 @@
+{
+  "Tutoring": [
+    {
+      "websiteWWW": "https://gjh.sk/aktivity-na-skole/tutoring-a-dobrovolnictvo/",
+      "dbPasswordFile": "../../passwords/database.json"
+    }
+  ]
+}

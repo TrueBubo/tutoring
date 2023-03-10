@@ -1,0 +1,303 @@
+* {
+    font-family: "Open Sans", sans-serif ;
+}
+
+body {
+    margin-left: 2rem;
+    padding-bottom: 3rem;
+}
+
+header {
+    overflow: hidden;
+    margin-bottom: 2.5rem;
+}
+
+input {
+    margin-bottom: 1rem;
+    border-radius: 0.5rem;
+    border-width: 1px;
+}
+
+select {
+    border-radius: 0.5rem;
+    width: 200px
+}
+
+label {
+    display: inline-block;
+    width: 15rem;
+    text-align: left;
+    margin-right: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.fullWidth {
+    width: 100vw;
+}
+
+.topnav {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+.topnav a {
+    display: block;
+    color: hsl(0, 0%, 0%);
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 2rem;
+}
+
+.noDecoration {
+    text-decoration: none;
+    color: black;
+}
+
+.buttonLink:hover {
+    background-color: hsl(0, 0%, 95%);
+    border-radius: 25px;
+}
+
+.whiteHover {
+    background: white;
+}
+.whiteHover:hover {
+    background-color: hsl(0, 0%, 60%);
+    color: white;
+}
+
+.btn {
+    border-radius: 25px;
+    background-color: hsl(0, 0%, 95%);
+    padding: 8px;
+    padding-left: 14px;
+    padding-right: 14px;
+
+}
+
+.hugeText {
+    font-size: 3rem;
+}
+
+#languageChooser {
+    float: right;
+    display: block;
+    background: transparent;
+    border: none;
+    font-size: 3rem;
+}
+
+.largeText {
+    font-size: 1.5rem;
+}
+
+#languageChooser:hover {
+    background: hsl(0, 0%, 90%);
+    border-radius: 15px;
+}
+
+#wannaBeText {
+    font-size: 5rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 15px;
+    margin-top: 0px;
+}
+
+.centeredScreen {
+    width: 50%;
+    margin: 0 0;
+    position: absolute;
+    top: 35%;
+    left: 45%;
+    transform: translate(-50%, 0%);
+}
+
+.centeredWidth {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    position: absolute;
+}
+
+
+.centerText {
+    text-align: center;
+}
+
+.formField {
+    margin-bottom: 1rem;
+}
+
+#tutorTypeButtons {
+    display: flex;
+    justify-content: center;
+}
+
+.btns-NextToEachOther {
+    display: flex;
+    justify-content: center;
+}
+
+.width50Center {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media only screen and (max-width: 1280px) {
+    .centeredScreen {
+        width: 90%;
+        font-size: 1.5rrem;
+    }
+
+    #contactPage > * {
+        font-size: 1.5rrem;
+    }
+
+    #tutorTypeButtons {
+        flex-direction: column;
+        margin-left: 1.5rem;
+    }
+    .tutorType {
+        margin-bottom: 5px;
+    }
+    .btns-NextToEachOther {
+        flex-direction: column;
+    }
+    .width50Center {
+        width: 100%;
+    }
+}
+
+.tutorType {
+    display: inline-block;
+    color: hsl(0, 0%, 0%);
+    text-align: center;
+    padding: 0.5rem;
+    text-decoration: none;
+    font-size: 5rem;
+    border: solid;
+    border-radius: 25px;
+    margin: 0.2rem;
+}
+
+.border {
+    border: 1px solid hsl(0, 0%, 70%);
+    padding: 0.5rem;
+    border-radius: 25px;
+}
+
+
+
+#contactPage > h1 {
+    white-space: pre-wrap;
+    display: block;
+    margin-bottom: 10px;
+}
+
+#contactPage > h2 {
+    margin-bottom: 5px;
+    margin-top: 10px;
+}
+
+#contactPage > h3 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+}
+
+.roundedCorners {
+    border: solid;
+    border-radius: 25px;
+    text-decoration: none;
+    color: hsl(0, 0%, 0%);
+    padding: 10px 10px;
+}
+
+
+
+.contactInfoInput {
+    align-content: center;
+}
+
+.errorMessage {
+    color: hsl(0, 129%, 31%);
+    background: hsl(0, 100%, 87%);
+    border: 1px solid hsl(0, 129%, 80%);
+}
+
+.goodMessage {
+    color: hsl(0, 0%, 100%);
+    background: hsl(201, 100%, 78%);
+    border: 1px solid hsl(207, 100%, 80%);
+    margin-top: -1em;
+}
+
+.required {
+    color: red;
+}
+
+.infoCard {
+    background-color: hsl(0, 0%, 95%);
+    width: 85%;
+    border: 1px solid hsl(0,0%,90%);
+    padding: 20px;
+    margin-bottom: 1rem;
+}
+
+.btnCenter {
+    left: 0;
+    right: 32px;
+}
+
+
+@media only screen and (min-width: 15cm) {
+    .centeredHorizontalDiv {
+        transform: translate(40%, 0%);
+    }
+
+    .infoCard {
+        width: 50%;
+    }
+
+
+
+}
+
+.noBorder {
+    border: none;
+}
+
+
+
+.rightAlign {
+    display: inline-block;
+    margin-right: 10px;
+    float: right;
+}
+
+td, th {
+    border: 1px solid hsl(0, 0%, 70%);
+    text-align: left;
+    padding: 8px;
+    font-weight: normal;
+}
+
+.logsTable div:nth-child(even) {
+    background: hsl(0,0%,90%);
+}
+
+.logsTable tr:nth-child(even) {
+    background: hsl(0,0%,90%);
+}
+
+.ml15 {
+    margin-left: 15rem;
+}
+
+.mb05 {
+    margin-bottom: 0.5rem;
+}
