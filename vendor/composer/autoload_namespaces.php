@@ -6,4 +6,5 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Tatocaster\\Monolog\\Formatter\\' => array($vendorDir . '/tatocaster/monolog-json-unicode-pretty-formatter/src'),
 );

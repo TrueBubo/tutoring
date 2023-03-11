@@ -1,13 +1,14 @@
 <?php
 require("header.php");
 
-
+require_once('vendor/autoload.php');
 
 // loads jsons with data
 $langPack = getLanguagePack($_COOKIE["lang"]);
 $contactInfo = getContactInfo();
 $coordinator = $contactInfo["Coordinator"][0];
 $helpers = $contactInfo["Helpers"];
+$logger = getLogger();
 
 // Changes JSON with new contact info
 if (isset($_POST["submit"])) {
@@ -35,6 +36,7 @@ if (isset($_POST["submit"])) {
     // Overwrites contactInfo.json with new data
     file_put_contents("configFiles/contactInfo.json",
                       json_encode($contactInfo));
+    $logger->info("Contact page changed", array($_SESSION["user"]));
     header("Refresh:0");
 }
 
@@ -81,7 +83,7 @@ if (isset($_SESSION["isAdmin"]) and $_SESSION["isAdmin"]) {
     </div>
     <?php
 } else { ?>
-    <strong style='font-size: 3em'><?= $langPack['Access denied!'] ?></strong>
+    <strong class="hugeText"><?= $langPack['Access denied!'] ?></strong>
 <?php }
 
 ?>

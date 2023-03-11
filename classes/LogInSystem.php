@@ -1,15 +1,24 @@
 <?php
 declare(strict_types=1);
+require_once 'vendor/autoload.php';
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 
 class LogInSystem {
     private string $email;
     private string $plainTextPassword;
     private mysqli $db;
+    private Logger $logger;
 
     public function __construct(string $email, string $plainTextPassword) {
         $this->email = $email;
         $this->plainTextPassword = $plainTextPassword;
         $this->db = connectDb();
+
+        $this->logger = getLogger();
+        set_error_handler('customErrorHandler');
+        register_shutdown_function('customShutdownFunction');
+
     }
 
     // Logs user in
@@ -25,7 +34,7 @@ class LogInSystem {
         $_SESSION["user"] = $result["UID"];
         $_SESSION["isTutor"] = $result["isTutor"];
         $_SESSION["isAdmin"] = $result["isAdmin"];
-
+        $this->logger->info("User logged in", array($_SESSION["user"]));
         return true;
     }
 
@@ -67,6 +76,7 @@ class LogInSystem {
         if (!$statement->execute()) {
             return false;
         } else {
+            $this->logger->info("Account created", array($name, $this->email));
             return true;
         }
     }
@@ -77,6 +87,7 @@ class LogInSystem {
         $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
         $statement->bind_param("ss", $hashedPassword, $email);
         $statement->execute();
+        $this->logger->info("User password changed", array($email));
     }
 
 

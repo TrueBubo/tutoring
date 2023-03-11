@@ -1,9 +1,8 @@
 <?php
 declare(strict_types=1);
-ini_set('display_errors', "1");
-ini_set('display_startup_errors', "1");
-error_reporting(E_ALL);
 use Ds\Set;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 
 require_once 'vendor/autoload.php';
 
@@ -18,12 +17,18 @@ class TutoringSession {
     private int $howOftenTutor;
     private array $timesAvailable;
     private string $specialNote;
+    private Logger $logger;
 
     public function __construct(array $data, string $type) {
         $this->type = $type;
         $this->grade = (int) $data["grade"];
 
         $this->db = connectDb();
+
+        $this->logger = getLogger();
+        set_error_handler('customErrorHandler');
+        register_shutdown_function('customShutdownFunction');
+
 
         if (isset($_SESSION["user"])) {
             $query
@@ -284,7 +289,6 @@ class TutoringSession {
     public function createSpecialRequest(
         array $subjects
     ): void { // Sends special requests for admins to review
-        //$subjectsJson = json_encode($this->subjects);
         $timeAvailableJson = json_encode($this->timesAvailable);
         // Puts the request to SpecialRequests table
         foreach ($subjects as $subject) {
@@ -301,6 +305,7 @@ class TutoringSession {
                 $this->specialNote, $this->email);
             $statement->execute();
         }
+        $this->logger->info('Special request received');
     }
 
     public function createTutorOffer(
@@ -599,5 +604,7 @@ class TutoringSession {
 
         self::createTutoringSessionEntryInDb($TutorID, $TuteeEmail, $TuteeName,
             $subjects);
+
+        $this->logger->info("Tutoring Session Created");
     }
 }

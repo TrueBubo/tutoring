@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
-
+require_once('vendor/autoload.php');
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 
 function getJSONData(string $filename): array {
     $json = file_get_contents($filename);
@@ -100,7 +102,7 @@ function minutesToTime($minutes): string {
     return $hours . ":" . $minutes;
 }
 
-function overlappingTime(array $timeIntervalA, array $timeIntervalB) { // Input arrays [startingSQLTime, endingSQLTime]
+function overlappingTime(array $timeIntervalA, array $timeIntervalB): array { // Input arrays [startingSQLTime, endingSQLTime]
     $startTimeA = SQLTimeToMinutesSinceMidnight($timeIntervalA[0]);
     $endTimeA = SQLTimeToMinutesSinceMidnight($timeIntervalA[1]);
     $startTimeB = SQLTimeToMinutesSinceMidnight($timeIntervalB[0]);
@@ -117,4 +119,36 @@ function overlappingTime(array $timeIntervalA, array $timeIntervalB) { // Input 
     return array(minutesToTime($intersectingTimeStart), minutesToTime($intersectingTimeEnd));
 }
 
+function customErrorHandler($errLevel, $errStr, $errFile, $errline): void { // Handles php messages when not defined how to treat them
+    global $logger;
+    switch ($errLevel) {
+        case E_WARNING or E_USER_WARNING:
+            $logger->warning("$errStr in $errFile:$errline");
+            break;
+        case E_NOTICE or E_USER_NOTICE:
+            $logger->notice("$errStr in $errFile:$errline");
+            break;
+        case E_USER_ERROR:
+            $logger->error("$errStr in $errFile:$errline");
+            break;
+        default:
+            $logger->error("$errStr in $errFile:$errline");
+            break;
+    }
+}
+
+function customShutdownFunction(): void { // Logs fatal error
+    global $logger;
+    $error = error_get_last();
+    if ($error !== null && $error['type'] === E_ERROR) {
+        $logger->error("Fatal error: {$error['message']} in {$error['file']}:{$error['line']}");
+    }
+}
+
+function getLogger(): Logger { // Return default logger
+    $logger = new Logger('Logger');
+    $handler = new StreamHandler('logFile.log', Logger::DEBUG);
+    $logger->pushHandler($handler);
+    return $logger;
+}
 ?>

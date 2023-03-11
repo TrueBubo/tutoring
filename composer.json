@@ -3,6 +3,8 @@
     "type": "project",
     "require": {
         "php-ds/php-ds": "^1.4",
-      "ext-mysqli": "*"
+      "ext-mysqli": "*",
+        "monolog/monolog": "^3.3",
+        "tatocaster/monolog-json-unicode-pretty-formatter": "^1.0"
     }
 }
