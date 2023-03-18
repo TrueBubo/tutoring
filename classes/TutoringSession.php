@@ -555,42 +555,45 @@ class TutoringSession {
 
     }
 
-    public function setTutorFreeHoursByID(int $ID, int $value): void {
+    public static function setTutorFreeHoursByID(int $ID, int $value): void {
+        $db = connectDb();
         $query = "UPDATE `Users` SET howManyAdditionHoursFree=? WHERE UID=?";
-        $statement = $this->db->prepare($query);
+        $statement = $db->prepare($query);
         $statement->bind_param("ss", $value, $ID);
         $statement->execute();
     }
 
-    public function deleteTutorsOffersByID(int $ID): void {
+    public static function deleteTutorsOffersByID(int $ID): void {
+        $db = connectDb();
         $query = "DELETE FROM `TutorsAvailable` WHERE TutorID=?";
-        $statement = $this->db->prepare($query);
+        $statement = $db->prepare($query);
         $statement->bind_param("s", $ID);
         $statement->execute();
     }
 
-    public function deleteSelectedTuteesSubjects( // Used to delete subjects, when the tutee no longer seeks them, they found them
+    public static function deleteSelectedTuteesSubjects( // Used to delete subjects, when the tutee no longer seeks them, they found them
         string $TuteeEmail,
         Ds\Set $subjects
     ): void {
+        $db = connectDb();
         $query
             = "DELETE FROM `TuteesAvailable` WHERE email=? and subject in ('"
-            .implode("','", array_map(array($this->db, 'real_escape_string'),
+            .implode("','", array_map(array($db, 'real_escape_string'),
                 $subjects->toArray()))
             ."')";
-        $statement = $this->db->prepare($query);
+        $statement = $db->prepare($query);
         $statement->bind_param("s", $TuteeEmail);
         $statement->execute();
     }
 
-    public function markSessionInDb(
+    public static function markSessionInDb(
         int $TutorID,
         string $TuteeEmail,
         string $TuteeName,
         Ds\Set $subjects
     ): void {
         // Tutee no longer requires these subjects
-        $this->deleteSelectedTuteesSubjects($TuteeEmail, $subjects);
+        self::deleteSelectedTuteesSubjects($TuteeEmail, $subjects);
 
         $newFreeHoursTutor = max([
             self::getTutorFreeHoursByID($TutorID)
@@ -598,13 +601,14 @@ class TutoringSession {
         ]);
         // No free time, they won't offer to tutor someone
         if ($newFreeHoursTutor == 0) {
-            $this->deleteTutorsOffersByID($TutorID);
+            self::deleteTutorsOffersByID($TutorID);
         }
-        $this->setTutorFreeHoursByID($TutorID, $newFreeHoursTutor);
+        self::setTutorFreeHoursByID($TutorID, $newFreeHoursTutor);
 
         self::createTutoringSessionEntryInDb($TutorID, $TuteeEmail, $TuteeName,
             $subjects);
 
-        $this->logger->info("Tutoring Session Created");
+        $logger = getLogger();
+        $logger->info("Tutoring Session Created");
     }
 }

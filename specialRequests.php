@@ -130,7 +130,7 @@ if (isset($_POST["submit"])) {
                 $tuteeMail,
                 $tuteeName,
                 $subject, "tutor");
-            TutoringSession::createTutoringSessionEntryInDb($tutorID, $tuteeMail, $tuteeName, $subject);
+            TutoringSession::markSessionInDb($tutorID, $tuteeMail, $tuteeName, $subject);
 
         } else {
             $query = "SELECT * FROM `TuteesAvailable` WHERE TuteeSessionID=?";
@@ -159,7 +159,7 @@ if (isset($_POST["submit"])) {
                 $tuteeMail,
                 $tuteeName,
                 $subject, "tutor");
-            TutoringSession::createTutoringSessionEntryInDb($tutorID, $tuteeMail, $tuteeName, $subject);
+            TutoringSession::markSessionInDb($tutorID, $tuteeMail, $tuteeName, $subject);
         }
 
 
@@ -207,7 +207,7 @@ if (isset($_POST["submit"])) {
                 $tutorEmail,
                 $tutorName,
                 $subject, "tutee");
-            TutoringSession::createTutoringSessionEntryInDb($tutorID, $tuteeMail, $tuteeName, $subject);
+            TutoringSession::markSessionInDb($tutorID, $tuteeMail, $tuteeName, $subject);
         } else {
             $query = "SELECT * FROM `TutorsAvailable` WHERE TutorSessionID=?";
             $statement = $db->prepare($query);
@@ -235,7 +235,7 @@ if (isset($_POST["submit"])) {
                 $tutorEmail,
                 $tutorName,
                 $subject, "tutee");
-            TutoringSession::createTutoringSessionEntryInDb($tutorID, $tuteeMail, $tuteeName, $subject);
+            TutoringSession::markSessionInDb($tutorID, $tuteeMail, $tuteeName, $subject);
         }
 
         $query = "UPDATE `Users` SET howManyAdditionHoursFree = howManyAdditionHoursFree - 1 WHERE UID = ?;";
