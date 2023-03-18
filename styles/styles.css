@@ -150,11 +150,11 @@ label {
 @media only screen and (max-width: 1280px) {
     .centeredScreen {
         width: 90%;
-        font-size: 1.5rrem;
+        font-size: 1.5rem;
     }
 
     #contactPage > * {
-        font-size: 1.5rrem;
+        font-size: 1.5rem;
     }
 
     #tutorTypeButtons {
